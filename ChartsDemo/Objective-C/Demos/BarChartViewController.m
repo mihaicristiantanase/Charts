@@ -43,6 +43,7 @@
                      @{@"key": @"toggleAutoScaleMinMax", @"label": @"Toggle auto scale min/max"},
                      @{@"key": @"toggleData", @"label": @"Toggle Data"},
                      @{@"key": @"toggleBarBorders", @"label": @"Show Bar Borders"},
+                     @{@"key": @"toggleBarRoundedCorners", @"label": @"Toggle Bar Rounded Borders"},
                      ];
     
     [self setupBarLineChartView:_chartView];

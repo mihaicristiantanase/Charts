@@ -21,6 +21,7 @@ enum Option {
     case toggleAutoScaleMinMax
     case toggleData
     case toggleBarBorders
+    case toggleBarRoundedCorners
     // CandleChart
     case toggleShadowColorSameAsCandle
     // CombinedChart
@@ -58,6 +59,7 @@ enum Option {
         case .toggleAutoScaleMinMax: return "Toggle auto scale min/max"
         case .toggleData: return "Toggle Data"
         case .toggleBarBorders: return "Toggle Bar Borders"
+        case .toggleBarRoundedCorners: return "Toggle Bar Rounded Corners"
         // CandleChart
         case .toggleShadowColorSameAsCandle: return "Toggle shadow same color"
         // CombinedChart
@@ -165,6 +167,10 @@ class DemoBaseViewController: UIViewController, ChartViewDelegate {
                 }
             }
             chartView.setNeedsDisplay()
+        case .toggleBarRoundedCorners:
+          if let bcv = chartView as? BarChartView {
+            bcv.drawRoundedBarEnabled = !bcv.drawRoundedBarEnabled 
+          }
         default:
             break
         }

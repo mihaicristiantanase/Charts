@@ -153,6 +153,13 @@
         
         [chartView setNeedsDisplay];
     }
+    if ([key isEqualToString:@"toggleBarRoundedCorners"])
+    {
+        if ([chartView isKindOfClass:BarChartView.class]) {
+            BarChartView* bcv = (BarChartView*)chartView;
+            bcv.drawRoundedBarEnabled = !bcv.drawRoundedBarEnabled;
+        }
+    }
 }
 
 #pragma mark - Actions

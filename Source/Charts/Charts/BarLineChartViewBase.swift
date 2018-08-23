@@ -46,6 +46,13 @@ open class BarLineChartViewBase: ChartViewBase, BarLineScatterCandleBubbleChartD
     /// When enabled, the borders rectangle will be rendered.
     /// If this is enabled, there is no point drawing the axis-lines of x- and y-axis.
     @objc open var drawBordersEnabled = false
+
+    /// if set to true, a rounded rectangle with the corners is drawn on each bar
+    @objc open var drawRoundedBarEnabled: Bool = false {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     
     /// When enabled, the values will be clipped to contentRect, otherwise they can bleed outside the content rect.
     @objc open var clipValuesToContentEnabled: Bool = false

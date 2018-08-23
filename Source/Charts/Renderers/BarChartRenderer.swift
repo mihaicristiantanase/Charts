@@ -309,13 +309,37 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
-            
-            if drawBorder
-            {
+            if dataProvider.isDrawRoundedBarEnabled {
+              func getCornerRadiusSize() -> CGSize {
+                if let barCornerRadius = dataProvider.barData?.barCornerRadius {
+                  return CGSize(width: barCornerRadius, height: barCornerRadius)
+                } else {
+                  return CGSize(width: barRect.width / 2.0, height: barRect.width / 2.0)
+                }
+              }
+
+              let cornerRadius = getCornerRadiusSize()
+              let bezierPath = UIBezierPath(
+                  roundedRect: barRect,
+                  byRoundingCorners: dataSet.barRoundingCorners,
+                  cornerRadii: cornerRadius
+              )
+              context.addPath(bezierPath.cgPath)
+              context.fillPath()
+
+              if drawBorder {
+                bezierPath.lineWidth = borderWidth
+                borderColor.setStroke()
+                bezierPath.stroke()
+              }
+            } else {
+              context.fill(barRect)
+
+              if drawBorder {
                 context.setStrokeColor(borderColor.cgColor)
                 context.setLineWidth(borderWidth)
                 context.stroke(barRect)
+              }
             }
         }
         
@@ -675,8 +699,25 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 prepareBarHighlight(x: e.x, y1: y1, y2: y2, barWidthHalf: barData.barWidth / 2.0, trans: trans, rect: &barRect)
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
-                
-                context.fill(barRect)
+
+                if dataProvider.isDrawRoundedBarEnabled
+                {
+                    func getCornerRadiusSize() -> CGSize {
+                        if let barCornerRadius = dataProvider.barData?.barCornerRadius {
+                            return CGSize(width: barCornerRadius, height: barCornerRadius)
+                        } else {
+                            return CGSize(width: barRect.width / 2.0, height: barRect.width / 2.0)
+                        }
+                    }
+                    let cornerRadius = getCornerRadiusSize()
+                    let bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners: set.barRoundingCorners, cornerRadii: cornerRadius)
+                    context.addPath(bezierPath.cgPath)
+                    context.fillPath()
+                }
+                else
+                {
+                    context.fill(barRect)
+                }
             }
         }
         
